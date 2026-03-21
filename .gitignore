@@ -1,0 +1,25 @@
+# Segredos - NUNCA commitar
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Dados gerados (podem ser grandes)
+outputs/
+checkpoints/
+knowledge_base/
+
+# Pastas de entrada (conteúdo pessoal)
+input/
+
+# Banco de estado local
+state.db
+training_log.jsonl
+
+# OS
+.DS_Store
+Thumbs.db

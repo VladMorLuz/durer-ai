@@ -1,0 +1,21 @@
+# LLM
+groq>=0.9.0
+
+# Configuração
+python-dotenv>=1.0.0
+pyyaml>=6.0
+
+# Banco de estado
+# (sqlite3 já vem no Python, sem necessidade de instalar)
+
+# Processamento de PDFs (Fase 3)
+pymupdf>=1.24.0
+
+# Processamento de vídeo/áudio (Fase 3)
+openai-whisper>=20231117
+
+# Visão computacional para o crítico (Fase 4)
+Pillow>=10.0.0
+
+# Utilitários
+tqdm>=4.66.0

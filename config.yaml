@@ -1,0 +1,37 @@
+# =============================================================================
+# Dürer AI — Configuração central
+# Edite aqui para mudar comportamentos sem tocar no código
+# =============================================================================
+
+llm:
+  provider: groq
+  model: llama-3.3-70b-versatile
+  temperature: 0.7
+  max_tokens: 2048
+
+krita:
+  # Windows: "C:/Program Files/Krita (x64)/bin/krita.exe"
+  # Linux:   "/usr/bin/krita"
+  executable: "/usr/bin/krita"
+  canvas_width: 2048
+  canvas_height: 2048
+  default_dpi: 300
+
+agent:
+  autonomous_mode: true
+  practice_interval: 60        # segundos entre tentativas autônomas
+  max_saved_attempts: 100      # evita encher o HD
+
+paths:
+  input: "input/"
+  knowledge_base: "knowledge_base/"
+  reports: "reports/"
+  outputs: "outputs/"
+  checkpoints: "checkpoints/"
+  state_db: "state.db"
+  training_log: "training_log.jsonl"
+
+logging:
+  level: INFO
+  log_to_file: true
+  log_file: "durer.log"
