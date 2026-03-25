@@ -26,9 +26,6 @@ cp .env.example .env
 ```bash
 python main.py --check
 ```
-
-Se aparecer `✓ Setup completo`, está pronto para a Fase 2.
-
 ---
 
 ## Estrutura do projeto
@@ -47,9 +44,9 @@ dürer-ai/
 ├── outputs/            # Desenhos salvos
 ├── checkpoints/        # Snapshots do modelo
 │
-├── config.yaml         # Configuração central
-├── .env                # Segredos (nunca vai pro git)
-├── main.py             # Ponto de entrada
+├── config.yaml       
+├── .env                
+├── main.py             
 └── requirements.txt
 ```
 
@@ -58,7 +55,7 @@ dürer-ai/
 ## Fases do projeto
 
 - [x] **Fase 1** — Esqueleto: estrutura, config, conexão com Groq e Krita
-- [ ] **Fase 2** — Loop mínimo: agente recebe pedido e traça no Krita
+- [x] **Fase 2** — Loop mínimo: agente recebe pedido e traça no Krita
 - [ ] **Fase 3** — Ingestão: IA lê PDFs/vídeos e escreve relatórios
 - [ ] **Fase 4** — Crítico: avalia os desenhos com visão + métricas
 - [ ] **Fase 5** — Modo autônomo: pratica sozinha em background
