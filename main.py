@@ -1,9 +1,7 @@
 """
-Dürer AI — Ponto de entrada principal.
-
 Uso:
-    python main.py          → inicia o sistema completo
-    python main.py --check  → só verifica se tudo está configurado
+    python main.py --check        → verifica se tudo está configurado
+    python main.py --draw "..."   → executa um pedido de desenho
 """
 
 import sys
@@ -11,14 +9,15 @@ import argparse
 from core.config import load_config
 from core.logger import get_logger
 from core.llm import LLMClient
+from core.training_log import TrainingLog
 from drawing.krita_bridge import KritaBridge
+from drawing.agent import DrawingAgent
+from drawing.renderer import Renderer
 
 
 def check_setup(cfg: dict, log) -> bool:
-    """Verifica se todas as peças estão no lugar antes de iniciar."""
     ok = True
 
-    # 1. Testa conexão com o Groq
     log.info("Verificando conexão com Groq...")
     try:
         llm = LLMClient(cfg)
@@ -31,30 +30,73 @@ def check_setup(cfg: dict, log) -> bool:
         log.error(f"Falha na conexão com Groq: {e}")
         ok = False
 
-    # 2. Testa conexão com o Krita
     log.info("Verificando conexão com Krita...")
     bridge = KritaBridge(cfg)
-    krita_ok = bridge.ping()
-    if not krita_ok:
+    if bridge.ping():
+        log.info("Krita bridge: OK")
+    else:
         log.warning(
-            "Krita não encontrado — não é um erro fatal na Fase 1. "
-            "Abra o Krita e ative o plugin de servidor para as próximas fases."
+            "Krita não encontrado — abra o Krita e certifique-se "
+            "que o plugin Dürer Server está ativo."
         )
-        # Não marca como falha — Krita é opcional na Fase 1
 
     return ok
 
 
+def executar_desenho(pedido: str, cfg: dict, log) -> bool:
+    """Loop completo B+C com registro: pedido → plano → código → Krita → log."""
+
+    bridge = KritaBridge(cfg)
+    if not bridge.ping():
+        log.error("Krita não está acessível. Abra o Krita antes de desenhar.")
+        return False
+
+    tlog = TrainingLog(cfg)
+
+    # Estágio 1: plano de intenções
+    agent = DrawingAgent(cfg)
+    plano = agent.plan(pedido)
+
+    if not plano:
+        log.error("Não foi possível gerar o plano de desenho.")
+        tlog.registrar(
+            pedido=pedido,
+            plano=[],
+            codigo="",
+            sucesso=False,
+            erro="Falha ao gerar plano de intenções",
+        )
+        return False
+
+    # Estágio 2: renderização
+    renderer = Renderer(cfg)
+    resultado = renderer.render(plano)
+
+    # Registra tudo no training log
+    tlog.registrar(
+        pedido=pedido,
+        plano=plano,
+        codigo=resultado["codigo"],
+        sucesso=resultado["sucesso"],
+        erro=resultado.get("erro"),
+    )
+
+    if resultado["sucesso"]:
+        log.info(f"Desenho concluído: '{pedido}'")
+    else:
+        log.error(f"Falha ao desenhar: '{pedido}' — {resultado.get('erro')}")
+
+    return resultado["sucesso"]
+
+
 def main():
     parser = argparse.ArgumentParser(description="Dürer AI")
-    parser.add_argument(
-        "--check",
-        action="store_true",
-        help="Verifica configuração sem iniciar o sistema completo",
-    )
+    parser.add_argument("--check", action="store_true",
+                        help="Verifica configuração")
+    parser.add_argument("--draw", type=str, metavar="PEDIDO",
+                        help="Executa um pedido de desenho")
     args = parser.parse_args()
 
-    # Carrega config (valida .env + config.yaml)
     try:
         cfg = load_config()
     except (FileNotFoundError, EnvironmentError) as e:
@@ -63,16 +105,23 @@ def main():
 
     log = get_logger("main", cfg)
     log.info("=" * 50)
-    log.info("Dürer AI iniciando...")
+    log.info("Dürer AI")
     log.info("=" * 50)
 
-    if args.check or True:  # Na Fase 1, sempre roda o check
-        tudo_ok = check_setup(cfg, log)
-        if tudo_ok:
-            log.info("✓ Setup completo. Pronto para a Fase 2.")
+    if args.check:
+        ok = check_setup(cfg, log)
+        if ok:
+            log.info("✓ Setup completo.")
         else:
-            log.error("✗ Problemas encontrados. Corrija antes de continuar.")
+            log.error("✗ Problemas encontrados.")
             sys.exit(1)
+
+    elif args.draw:
+        ok = executar_desenho(args.draw, cfg, log)
+        sys.exit(0 if ok else 1)
+
+    else:
+        parser.print_help()
 
 
 if __name__ == "__main__":

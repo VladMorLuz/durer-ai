@@ -58,7 +58,7 @@ dürer-ai/
 ## Fases do projeto
 
 - [x] **Fase 1** — Esqueleto: estrutura, config, conexão com Groq e Krita
-- [ ] **Fase 2** — Loop mínimo: agente recebe pedido e traça no Krita
+- [x] **Fase 2** — Loop mínimo: agente recebe pedido e traça no Krita
 - [ ] **Fase 3** — Ingestão: IA lê PDFs/vídeos e escreve relatórios
 - [ ] **Fase 4** — Crítico: avalia os desenhos com visão + métricas
 - [ ] **Fase 5** — Modo autônomo: pratica sozinha em background

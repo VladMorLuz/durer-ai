@@ -18,3 +18,66 @@
 [00:45:35] INFO     main — Verificando conexão com Krita...
 [00:45:37] WARNING  main — Krita não encontrado — não é um erro fatal na Fase 1. Abra o Krita e ative o plugin de servidor para as próximas fases.
 [00:45:37] INFO     main — ✓ Setup completo. Pronto para a Fase 2.
+[15:17:21] INFO     main — ==================================================
+[15:17:21] INFO     main — Dürer AI iniciando...
+[15:17:21] INFO     main — ==================================================
+[15:17:21] INFO     main — Verificando conexão com Groq...
+[15:17:23] INFO     main — Groq respondeu: Sistema OK
+[15:17:23] INFO     main — Verificando conexão com Krita...
+[15:17:23] INFO     main — ✓ Setup completo. Pronto para a Fase 2.
+[23:37:57] INFO     main — ==================================================
+[23:37:57] INFO     main — Dürer AI
+[23:37:57] INFO     main — ==================================================
+[23:38:01] INFO     main — Desenho concluído: 'desenhe um rosto simples'
+[23:38:31] INFO     main — ==================================================
+[23:38:31] INFO     main — Dürer AI
+[23:38:31] INFO     main — ==================================================
+[23:38:34] INFO     main — Desenho concluído: 'desenhe um rosto simples'
+[23:39:54] INFO     main — ==================================================
+[23:39:54] INFO     main — Dürer AI
+[23:39:54] INFO     main — ==================================================
+[23:39:57] INFO     main — Desenho concluído: 'desenhe um triangulo'
+[23:43:15] INFO     main — ==================================================
+[23:43:15] INFO     main — Dürer AI
+[23:43:15] INFO     main — ==================================================
+[23:43:25] ERROR    main — Falha ao desenhar: 'pinte o triangulo de rosa'
+[23:46:24] INFO     main — ==================================================
+[23:46:24] INFO     main — Dürer AI
+[23:46:24] INFO     main — ==================================================
+[23:46:29] ERROR    main — Falha ao desenhar: 'desenhe um pentagono'
+[23:49:35] INFO     main — ==================================================
+[23:49:35] INFO     main — Dürer AI
+[23:49:35] INFO     main — ==================================================
+[23:49:38] INFO     main — Desenho concluído: 'desenhe um triangulo rosa'
+[23:50:04] INFO     main — ==================================================
+[23:50:04] INFO     main — Dürer AI
+[23:50:04] INFO     main — ==================================================
+[23:50:08] INFO     main — Desenho concluído: 'desenhe um quadrado amarelo'
+[23:50:32] INFO     main — ==================================================
+[23:50:32] INFO     main — Dürer AI
+[23:50:32] INFO     main — ==================================================
+[23:50:34] INFO     main — Desenho concluído: 'desenhe uma linha preta diagonal'
+[23:51:01] INFO     main — ==================================================
+[23:51:01] INFO     main — Dürer AI
+[23:51:01] INFO     main — ==================================================
+[23:51:06] INFO     main — Desenho concluído: 'desenhe uma estrela azul enorme no centro'
+[00:01:00] INFO     main — ==================================================
+[00:01:00] INFO     main — Dürer AI
+[00:01:00] INFO     main — ==================================================
+[00:01:05] ERROR    main — Falha ao desenhar: 'desenhe um triangulo rosa' — name 'QImage' is not defined
+[18:15:37] INFO     main — ==================================================
+[18:15:37] INFO     main — Dürer AI
+[18:15:37] INFO     main — ==================================================
+[18:15:41] ERROR    main — Falha ao desenhar: 'desenhe um tiangulo rosa no centro da tela' — name 'QImage' is not defined
+[18:56:14] INFO     main — ==================================================
+[18:56:14] INFO     main — Dürer AI
+[18:56:14] INFO     main — ==================================================
+[18:56:17] INFO     main — Desenho concluído: 'desenhe um tiangulo rosa no centro da tela'
+[18:56:42] INFO     main — ==================================================
+[18:56:42] INFO     main — Dürer AI
+[18:56:42] INFO     main — ==================================================
+[18:56:45] INFO     main — Desenho concluído: 'desenhe um triangulo amarelo no centro da tela'
+[18:57:01] INFO     main — ==================================================
+[18:57:01] INFO     main — Dürer AI
+[18:57:01] INFO     main — ==================================================
+[18:57:04] INFO     main — Desenho concluído: 'desenhe uma linha diagonal de cor verde'

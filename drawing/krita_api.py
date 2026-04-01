@@ -1,17 +1,3 @@
-"""
-drawing/krita_api.py
-Ponte de comunicação com o Krita via WebSocket.
-
-Como funciona:
-  O Krita roda um pequeno servidor WebSocket interno (via plugin).
-  Este módulo envia comandos JSON para esse servidor, que os executa
-  como scripts Python dentro do Krita.
-
-Pré-requisito:
-  O plugin "Krita WebSocket Bridge" precisa estar ativo no Krita.
-  (Vamos criar/instalar esse plugin na Fase 2.)
-"""
-
 import json
 import asyncio
 import logging
