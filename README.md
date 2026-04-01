@@ -26,9 +26,6 @@ cp .env.example .env
 ```bash
 python main.py --check
 ```
-
-Se aparecer `✓ Setup completo`, está pronto para a Fase 2.
-
 ---
 
 ## Estrutura do projeto
@@ -47,9 +44,9 @@ dürer-ai/
 ├── outputs/            # Desenhos salvos
 ├── checkpoints/        # Snapshots do modelo
 │
-├── config.yaml         # Configuração central
-├── .env                # Segredos (nunca vai pro git)
-├── main.py             # Ponto de entrada
+├── config.yaml       
+├── .env                
+├── main.py             
 └── requirements.txt
 ```
 
