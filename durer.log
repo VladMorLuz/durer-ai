@@ -81,3 +81,31 @@
 [18:57:01] INFO     main — Dürer AI
 [18:57:01] INFO     main — ==================================================
 [18:57:04] INFO     main — Desenho concluído: 'desenhe uma linha diagonal de cor verde'
+[23:58:45] INFO     main — ==================================================
+[23:58:45] INFO     main — Dürer AI
+[23:58:45] INFO     main — ==================================================
+[23:58:45] INFO     main — Iniciando pipeline de ingestão...
+[23:59:16] INFO     main — Estudo concluído. 1 arquivo(s) processado(s).
+[23:59:16] INFO     main — Relatórios salvos em reports/ | Textos em knowledge_base/
+[00:22:25] INFO     main — ==================================================
+[00:22:25] INFO     main — Dürer AI
+[00:22:25] INFO     main — ==================================================
+[00:22:25] INFO     main — Iniciando pipeline de ingestão...
+[00:22:45] INFO     main — ==================================================
+[00:22:45] INFO     main — Dürer AI
+[00:22:45] INFO     main — ==================================================
+[00:22:45] INFO     main — Iniciando pipeline de ingestão...
+[00:36:41] INFO     main — ==================================================
+[00:36:41] INFO     main — Dürer AI
+[00:36:41] INFO     main — ==================================================
+[00:36:41] INFO     main — Iniciando pipeline de ingestão...
+[00:36:52] INFO     main — ==================================================
+[00:36:52] INFO     main — Dürer AI
+[00:36:52] INFO     main — ==================================================
+[00:36:52] INFO     main — Iniciando pipeline de ingestão...
+[00:36:57] INFO     main — ==================================================
+[00:36:57] INFO     main — Dürer AI
+[00:36:57] INFO     main — ==================================================
+[00:36:57] INFO     main — Iniciando pipeline de ingestão...
+[00:38:54] INFO     main — Estudo concluído. 1 arquivo(s) processado(s).
+[00:38:54] INFO     main — Relatórios salvos em reports/ | Textos em knowledge_base/

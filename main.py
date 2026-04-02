@@ -1,7 +1,10 @@
 """
+Dürer AI — Ponto de entrada principal.
+
 Uso:
-    python main.py --check        → verifica se tudo está configurado
-    python main.py --draw "..."   → executa um pedido de desenho
+    python main.py --check          → verifica se tudo está configurado
+    python main.py --draw "..."     → executa um pedido de desenho
+    python main.py --study          → processa novos arquivos em input/
 """
 
 import sys
@@ -13,6 +16,7 @@ from core.training_log import TrainingLog
 from drawing.krita_bridge import KritaBridge
 from drawing.agent import DrawingAgent
 from drawing.renderer import Renderer
+from ingestion.pipeline import IngestionPipeline
 
 
 def check_setup(cfg: dict, log) -> bool:
@@ -44,35 +48,24 @@ def check_setup(cfg: dict, log) -> bool:
 
 
 def executar_desenho(pedido: str, cfg: dict, log) -> bool:
-    """Loop completo B+C com registro: pedido → plano → código → Krita → log."""
-
     bridge = KritaBridge(cfg)
     if not bridge.ping():
         log.error("Krita não está acessível. Abra o Krita antes de desenhar.")
         return False
 
     tlog = TrainingLog(cfg)
-
-    # Estágio 1: plano de intenções
     agent = DrawingAgent(cfg)
     plano = agent.plan(pedido)
 
     if not plano:
         log.error("Não foi possível gerar o plano de desenho.")
-        tlog.registrar(
-            pedido=pedido,
-            plano=[],
-            codigo="",
-            sucesso=False,
-            erro="Falha ao gerar plano de intenções",
-        )
+        tlog.registrar(pedido=pedido, plano=[], codigo="",
+                       sucesso=False, erro="Falha ao gerar plano")
         return False
 
-    # Estágio 2: renderização
     renderer = Renderer(cfg)
     resultado = renderer.render(plano)
 
-    # Registra tudo no training log
     tlog.registrar(
         pedido=pedido,
         plano=plano,
@@ -89,12 +82,27 @@ def executar_desenho(pedido: str, cfg: dict, log) -> bool:
     return resultado["sucesso"]
 
 
+def executar_estudo(cfg: dict, log) -> None:
+    log.info("Iniciando pipeline de ingestão...")
+    pipeline = IngestionPipeline(cfg)
+    total = pipeline.processar_novos()
+
+    if total == 0:
+        log.info("Nenhum arquivo novo para processar.")
+        log.info("Coloque PDFs ou vídeos na pasta input/ e rode novamente.")
+    else:
+        log.info(f"Estudo concluído. {total} arquivo(s) processado(s).")
+        log.info("Relatórios salvos em reports/ | Textos em knowledge_base/")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Dürer AI")
     parser.add_argument("--check", action="store_true",
                         help="Verifica configuração")
     parser.add_argument("--draw", type=str, metavar="PEDIDO",
                         help="Executa um pedido de desenho")
+    parser.add_argument("--study", action="store_true",
+                        help="Processa novos arquivos em input/")
     args = parser.parse_args()
 
     try:
@@ -110,15 +118,15 @@ def main():
 
     if args.check:
         ok = check_setup(cfg, log)
-        if ok:
-            log.info("✓ Setup completo.")
-        else:
-            log.error("✗ Problemas encontrados.")
-            sys.exit(1)
+        log.info("✓ Setup completo." if ok else "✗ Problemas encontrados.")
+        sys.exit(0 if ok else 1)
 
     elif args.draw:
         ok = executar_desenho(args.draw, cfg, log)
         sys.exit(0 if ok else 1)
+
+    elif args.study:
+        executar_estudo(cfg, log)
 
     else:
         parser.print_help()
