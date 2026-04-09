@@ -1,7 +1,6 @@
 """
 Carrega e valida config.yaml + .env
 Qualquer módulo que precisar de configuração importa daqui.
-Nunca leia config.yaml diretamente em outro arquivo.
 """
 
 import os
@@ -9,7 +8,6 @@ import yaml
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Carrega o .env antes de qualquer coisa
 load_dotenv()
 
 _BASE_DIR = Path(__file__).parent.parent
@@ -27,7 +25,6 @@ def load_config() -> dict:
 
 
 def _inject_secrets(cfg: dict) -> None:
-    """Injeta segredos do .env no config em memória (nunca em disco)."""
     groq_key = os.getenv("GROQ_API_KEY")
     if not groq_key:
         raise EnvironmentError(
@@ -38,10 +35,8 @@ def _inject_secrets(cfg: dict) -> None:
 
 
 def _resolve_paths(cfg: dict) -> None:
-    """Converte paths relativos para absolutos a partir da raiz do projeto."""
     for key, val in cfg.get("paths", {}).items():
         absolute = _BASE_DIR / val
         cfg["paths"][key] = str(absolute)
-        # Cria a pasta se não existir (exceto arquivos como state.db)
         if not absolute.suffix:
             absolute.mkdir(parents=True, exist_ok=True)

@@ -109,3 +109,67 @@
 [00:36:57] INFO     main — Iniciando pipeline de ingestão...
 [00:38:54] INFO     main — Estudo concluído. 1 arquivo(s) processado(s).
 [00:38:54] INFO     main — Relatórios salvos em reports/ | Textos em knowledge_base/
+[22:04:56] INFO     main — ==================================================
+[22:04:56] INFO     main — Dürer AI
+[22:04:56] INFO     main — ==================================================
+[22:04:56] INFO     main — Verificando conexão com Groq...
+[22:04:58] INFO     main — Groq respondeu: Sistema OK
+[22:04:58] INFO     main — Verificando conexão com Gemini...
+[22:05:00] ERROR    main — Falha na conexão com Gemini: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 47.713308852s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '47s'}]}}
+[22:05:00] INFO     main — Verificando conexão com Krita...
+[22:05:02] WARNING  main — Krita não encontrado — abra o Krita e certifique-se que o plugin Dürer Server está ativo.
+[22:05:02] INFO     main — ✗ Problemas encontrados.
+[22:06:37] INFO     main — ==================================================
+[22:06:37] INFO     main — Dürer AI
+[22:06:37] INFO     main — ==================================================
+[22:06:40] INFO     main — Exportando canvas para análise...
+[16:11:09] INFO     main — ==================================================
+[16:11:09] INFO     main — Dürer AI
+[16:11:09] INFO     main — ==================================================
+[16:11:09] INFO     main — Verificando conexão com Groq...
+[16:11:11] INFO     main — Groq respondeu: Sistema OK
+[16:11:11] INFO     main — Verificando Ollama (visão local)...
+[16:11:13] INFO     main — Ollama: OK
+[16:11:13] INFO     main — Verificando conexão com Krita...
+[16:11:15] WARNING  main — Krita não encontrado — abra o Krita e certifique-se que o plugin Dürer Server está ativo.
+[16:11:15] INFO     main — ✓ Setup completo.
+[16:12:45] INFO     main — ==================================================
+[16:12:45] INFO     main — Dürer AI
+[16:12:45] INFO     main — ==================================================
+[16:12:45] INFO     main — Verificando conexão com Groq...
+[16:12:46] INFO     main — Groq respondeu: Sistema OK
+[16:12:46] INFO     main — Verificando Ollama (visão local)...
+[16:12:48] INFO     main — Ollama: OK
+[16:12:48] INFO     main — Verificando conexão com Krita...
+[16:12:48] INFO     main — Krita bridge: OK
+[16:12:48] INFO     main — ✓ Setup completo.
+[16:13:03] INFO     main — ==================================================
+[16:13:03] INFO     main — Dürer AI
+[16:13:03] INFO     main — ==================================================
+[16:13:06] INFO     main — Exportando canvas para análise...
+[16:13:56] INFO     main — Desenho concluído: 'desenhe um círculo azul' | nota: 0/10
+[16:22:10] INFO     main — ==================================================
+[16:22:10] INFO     main — Dürer AI
+[16:22:10] INFO     main — ==================================================
+[16:22:13] INFO     main — Exportando canvas para análise...
+[16:27:33] INFO     main — Desenho concluído: 'desenhe um círculo azul' | nota: 0/10
+[16:36:33] INFO     main — ==================================================
+[16:36:33] INFO     main — Dürer AI
+[16:36:33] INFO     main — ==================================================
+[16:36:37] INFO     main — Exportando canvas para análise...
+[16:41:46] INFO     main — Desenho concluído: 'desenhe um círculo azul' | nota: 0/10
+[16:53:10] INFO     main — ==================================================
+[16:53:10] INFO     main — Dürer AI
+[16:53:10] INFO     main — ==================================================
+[16:53:13] INFO     main — Exportando canvas para análise...
+[16:58:25] INFO     main — Desenho concluído: 'desenhe um círculo azul' | nota: 0/10
+[18:19:00] INFO     main — ==================================================
+[18:19:00] INFO     main — Dürer AI
+[18:19:00] INFO     main — ==================================================
+[18:19:03] INFO     main — Exportando canvas para análise...
+[18:24:13] INFO     main — Desenho concluído: 'desenhe um círculo vermelho' | nota: 0/10
+[18:26:36] INFO     main — ==================================================
+[18:26:36] INFO     main — Dürer AI
+[18:26:36] INFO     main — ==================================================
+[18:26:39] INFO     main — Exportando canvas para análise...
+[18:31:49] INFO     main — Desenho concluído: 'desenhe um círculo azul' | nota: 0/10

@@ -16,6 +16,9 @@ from core.training_log import TrainingLog
 from drawing.krita_bridge import KritaBridge
 from drawing.agent import DrawingAgent
 from drawing.renderer import Renderer
+from drawing.canvas_export import CanvasExporter
+from critic.vision import VisionCritic
+from critic.post_report import PostReportGenerator
 from ingestion.pipeline import IngestionPipeline
 
 
@@ -34,6 +37,16 @@ def check_setup(cfg: dict, log) -> bool:
         log.error(f"Falha na conexão com Groq: {e}")
         ok = False
 
+    log.info("Verificando Ollama (visão local)...")
+    critic = VisionCritic(cfg)
+    if critic.ping():
+        log.info("Ollama: OK")
+    else:
+        log.warning(
+            "Ollama não está rodando. "
+            "Execute 'ollama serve' em outro terminal antes de desenhar."
+        )
+
     log.info("Verificando conexão com Krita...")
     bridge = KritaBridge(cfg)
     if bridge.ping():
@@ -48,12 +61,16 @@ def check_setup(cfg: dict, log) -> bool:
 
 
 def executar_desenho(pedido: str, cfg: dict, log) -> bool:
+    """Loop completo: pedido → plano → desenho → export → crítica → reflexão → log."""
+
     bridge = KritaBridge(cfg)
     if not bridge.ping():
         log.error("Krita não está acessível. Abra o Krita antes de desenhar.")
         return False
 
     tlog = TrainingLog(cfg)
+
+    # Estágio 1: plano de intenções
     agent = DrawingAgent(cfg)
     plano = agent.plan(pedido)
 
@@ -63,23 +80,58 @@ def executar_desenho(pedido: str, cfg: dict, log) -> bool:
                        sucesso=False, erro="Falha ao gerar plano")
         return False
 
+    # Estágio 2: renderização
     renderer = Renderer(cfg)
     resultado = renderer.render(plano)
 
+    if not resultado["sucesso"]:
+        tlog.registrar(
+            pedido=pedido, plano=plano,
+            codigo=resultado["codigo"],
+            sucesso=False, erro=resultado.get("erro"),
+        )
+        log.error(f"Falha ao desenhar: '{pedido}' — {resultado.get('erro')}")
+        return False
+
+    # Estágio 3: exporta canvas
+    log.info("Exportando canvas para análise...")
+    slug = pedido[:30].replace(" ", "_").lower()
+    exporter = CanvasExporter(cfg)
+    caminho_img = exporter.exportar(slug)
+
+    feedback = {}
+    caminho_img_str = None
+
+    if caminho_img:
+        caminho_img_str = str(caminho_img)
+
+        # Estágio 4: crítica visual (Ollama local)
+        critic = VisionCritic(cfg)
+        if critic.ping():
+            feedback = critic.avaliar(pedido, caminho_img)
+        else:
+            log.warning("Ollama não disponível — crítica pulada. Execute 'ollama serve'.")
+
+        # Estágio 5: relatório pós-desenho
+        if feedback:
+            reporter = PostReportGenerator(cfg)
+            reporter.gerar(pedido, plano, feedback)
+    else:
+        log.warning("Canvas não exportado — crítica pulada")
+
+    # Registra tudo no training log
     tlog.registrar(
         pedido=pedido,
         plano=plano,
         codigo=resultado["codigo"],
-        sucesso=resultado["sucesso"],
-        erro=resultado.get("erro"),
+        sucesso=True,
+        caminho_imagem=caminho_img_str,
+        feedback_critico=feedback if feedback else None,
     )
 
-    if resultado["sucesso"]:
-        log.info(f"Desenho concluído: '{pedido}'")
-    else:
-        log.error(f"Falha ao desenhar: '{pedido}' — {resultado.get('erro')}")
-
-    return resultado["sucesso"]
+    nota = feedback.get("nota_geral", "?") if feedback else "sem crítica"
+    log.info(f"Desenho concluído: '{pedido}' | nota: {nota}/10")
+    return True
 
 
 def executar_estudo(cfg: dict, log) -> None:
@@ -100,7 +152,7 @@ def main():
     parser.add_argument("--check", action="store_true",
                         help="Verifica configuração")
     parser.add_argument("--draw", type=str, metavar="PEDIDO",
-                        help="Executa um pedido de desenho")
+                        help="Executa um pedido de desenho com crítica")
     parser.add_argument("--study", action="store_true",
                         help="Processa novos arquivos em input/")
     args = parser.parse_args()
@@ -118,8 +170,7 @@ def main():
 
     if args.check:
         ok = check_setup(cfg, log)
-        log.info("✓ Setup completo." if ok else "✗ Problemas encontrados.")
-        sys.exit(0 if ok else 1)
+        log.info("✓ Setup completo." if ok else "Verifique os avisos acima.")
 
     elif args.draw:
         ok = executar_desenho(args.draw, cfg, log)

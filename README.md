@@ -56,7 +56,7 @@ dürer-ai/
 
 - [x] **Fase 1** — Esqueleto: estrutura, config, conexão com Groq e Krita
 - [x] **Fase 2** — Loop mínimo: agente recebe pedido e traça no Krita
-- [ ] **Fase 3** — Ingestão: IA lê PDFs/vídeos e escreve relatórios
-- [ ] **Fase 4** — Crítico: avalia os desenhos com visão + métricas
+- [x] **Fase 3** — Ingestão: IA lê PDFs/vídeos e escreve relatórios
+- [x] **Fase 4** — Crítico: avalia os desenhos com visão + métricas
 - [ ] **Fase 5** — Modo autônomo: pratica sozinha em background
 - [ ] **Fase 6** — Chat: interface para commissionar desenhos e dar feedback
